@@ -10,15 +10,15 @@ resource "aws_key_pair" "vault_key" {
 
 
 resource "aws_instance" "vault-instance" {
-  ami                  = "ami-098f16afa9edf40be"
-  instance_type        = "t2.micro"
+  ami                  = "${var.vault_ami}"
+  instance_type        = "${var.instance_type}"
   key_name             = "vault_key"
-  availability_zone    = "us-east-1a"
+  availability_zone    = "${var.avail_zone}"
 #  vpc_security_group_ids = ["${aws_security_group.gtx_vault_dev_sg.id}","${aws_security_group.gtx_vault_private_sg.id}"]
 #  subnet_id            = "${lookup(local.subnet_az_to_id, local.sorted_subnet_azs[count.index])}"
   root_block_device {
-    volume_size = "15"
-    volume_type = "gp2"
+    volume_size = "${var.inst_vol_size}"
+    volume_type = "${var.inst_vol_type}"
   }
 
   tags = {
